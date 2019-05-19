@@ -9,9 +9,14 @@ class MyApp extends StatelessWidget {
     SystemUtils.setStatusBarStyle(Brightness.light);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: '网易云音乐-重设计',
-      home: Scaffold(
-        backgroundColor: Color(0xff1E1F2D),
+      title: '网易云音乐',
+      home: buildHome(),
+    );
+  }
+
+//app主体
+  Scaffold buildHome() => Scaffold(
+        backgroundColor: Color(0x5fee9090),
         body: SafeArea(
           child: Column(
             children: <Widget>[
@@ -57,227 +62,76 @@ class MyApp extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
 
 // 热门搜索
-  Container buildHotSearch() {
-    return Container(
-      padding: EdgeInsets.only(left: 0, top: 16),
-      child: Wrap(
-        alignment: WrapAlignment.start,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              '孤单心事',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
+  Container buildHotSearch() => Container(
+        padding: EdgeInsets.only(left: 0, top: 16),
+        child: Wrap(
+          alignment: WrapAlignment.start,
+          children: <Widget>[
+            buildContainer1('孤单心事'),
+            buildContainer1('青春住了谁'),
+            buildContainer1('Taylor Swift'),
+            buildContainer1('袁娅维远方韵律'),
+            buildContainer1('复仇者联盟'),
+            buildContainer1('bad guy'),
+            buildContainer1('better now'),
+            buildContainer1('horizon'),
+            buildContainer1('开场秒下'),
+            buildContainer1('horizon'),
+            buildContainer1('waiting for'),
+            buildContainer1('海阔天空'),
+            buildContainer1('逝去日子')
+          ],
+        ),
+      );
+
+// 热门搜索小部件
+  Container buildContainer1(str) => Container(
+        margin: EdgeInsets.only(right: 16, bottom: 16),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
+        child: Text(
+          str,
+          style: TextStyle(
+            color: Colors.white.withOpacity(0.5),
           ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              '青春住了谁',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16), 
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              'Taylor Swift',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              '袁娅维远方韵律',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              '复仇者联盟',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              'bad guy',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              'horizon',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              'better now',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              '开场秒下',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              'waiting for',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
+        ),
+      );
 
 // 历史搜索
-  Container buildHistoricalSearch() {
-    return Container(
-      padding: EdgeInsets.only(left: 0, top: 16),
-      child: Wrap(
-        alignment: WrapAlignment.start,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              'Beyond',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
+  Container buildHistoricalSearch() => Container(
+        padding: EdgeInsets.only(left: 0, top: 16),
+        child: Wrap(
+          alignment: WrapAlignment.start,
+          children: <Widget>[
+            buildContainer2('Beyond'),
+            buildContainer2('你的酒馆对我打了烊'),
+            buildContainer2('灰色轨迹'),
+            buildContainer2('大碗宽面'),
+            buildContainer2('大碗宽面'),
+            buildContainer2('大碗宽面'),
+          ],
+        ),
+      );
+
+//历史搜索小部件
+  Container buildContainer2(str) => Container(
+        margin: EdgeInsets.only(right: 16, bottom: 16),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
+        child: Text(
+          str,
+          style: TextStyle(
+            color: Colors.white.withOpacity(0.5),
           ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              '你的酒馆对我打了烊',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              '灰色轨迹',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-            child: Text(
-              '大碗宽面',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+        ),
+      );
 }
