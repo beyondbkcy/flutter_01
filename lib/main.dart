@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemUtils.setStatusBarStyle(Brightness.light);
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       title: '网易云音乐',
       home: buildHome(),
     );
@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
 
 //app主体
   Scaffold buildHome() => Scaffold(
-        backgroundColor: Color(0x5fee9090),
+        backgroundColor: Colors.deepPurple,
         body: SafeArea(
           child: Column(
             children: <Widget>[
               Container(
                 alignment: Alignment.topLeft,
-                margin: EdgeInsets.only(top: 16, left: 24),
+                margin: EdgeInsets.only(top: 24, left: 24),
                 child: Text(
                   '热门搜索',
                   style: TextStyle(
@@ -76,14 +76,6 @@ class MyApp extends StatelessWidget {
             buildContainer1('袁娅维远方韵律'),
             buildContainer1('复仇者联盟'),
             buildContainer1('bad guy'),
-            buildContainer1('better now'),
-            buildContainer1('horizon'),
-            buildContainer1('开场秒下'),
-            buildContainer1('horizon'),
-            buildContainer1('waiting for'),
-            buildContainer1('海阔天空'),
-            buildContainer1('逝去日子'),
-            buildContainer1('不再犹豫'),
           ],
         ),
       );
