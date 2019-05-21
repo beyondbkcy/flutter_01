@@ -82,7 +82,8 @@ class MyApp extends StatelessWidget {
             buildContainer1('horizon'),
             buildContainer1('waiting for'),
             buildContainer1('海阔天空'),
-            buildContainer1('逝去日子')
+            buildContainer1('逝去日子'),
+            buildContainer1('不再犹豫'),
           ],
         ),
       );
