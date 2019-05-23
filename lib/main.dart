@@ -37,22 +37,28 @@ class Home extends StatelessWidget {
             ),
             //小球
             Positioned(
-              bottom:32,
+              bottom: 32,
               right: 28,
-              child: Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(48),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      offset: Offset(0, 20),
-                      blurRadius: 28,
-                    )
-                  ]
+              child: GestureDetector(
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(48),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        offset: Offset(0, 20),
+                        blurRadius: 28,
+                      )
+                    ],
+                  ),
+                  child: Icon(Icons.add, size: 24),
                 ),
+                onTap: () {
+                  print("太棒了");
+                },
               ),
             )
             // Container(
