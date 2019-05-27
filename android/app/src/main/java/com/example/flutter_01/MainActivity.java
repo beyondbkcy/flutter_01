@@ -1,4 +1,4 @@
-package com.example.flutter_01;
+package com.paixs.hotspot;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

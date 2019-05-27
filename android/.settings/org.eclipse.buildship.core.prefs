@@ -1,0 +1,13 @@
+arguments=
+auto.sync=false
+build.scans.enabled=false
+connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
+connection.project.dir=
+eclipse.preferences.version=1
+gradle.user.home=C\:/Users/arpa2017/.gradle/wrapper/dists/gradle-4.10.2-all/9fahxiiecdb76a5g3aw9oi8rv/gradle-4.10.2
+java.home=
+jvm.arguments=
+offline.mode=false
+override.workspace.settings=true
+show.console.view=true
+show.executions.view=true

@@ -2,59 +2,87 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  var width = ui.window.physicalSize.width;
+  var devicePixelRatio = ui.window.devicePixelRatio;
+  double fabwidth = 48;
+  double fabheight = 48;
+
+  double fabbottom = 32;
+  double fabright = 32;
+
+  double addsize = 32;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Stack(
         children: <Widget>[
-          //底部栏
           Positioned(
-            bottom: 0,
-            width: MediaQuery.of(context).size.width,
-            height: 56,
-            child: Container(
-              color: Colors.white,
+            top: 0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                //标题栏
+                Container(
+                  margin: EdgeInsets.only(left: 32, top: 32),
+                  child: Text(
+                    '热门搜索',
+                    style: TextStyle(
+                      color: Color(0xff1E1F2D),
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          //小球
+          //小球操作按钮
           Positioned(
-            bottom: 32,
-            right: ui.window.physicalSize.width/ui.window.devicePixelRatio/2-24,
+            bottom: fabbottom,
+            right: fabright,
             child: GestureDetector(
               child: Container(
-                width: 48,
-                height: 48,
+                width: fabwidth,
+                height: fabheight,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(48),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
-                      offset: Offset(0, 20),
-                      blurRadius: 28,
+                      offset: Offset(0, 24),
+                      blurRadius: 24,
                     )
                   ],
                 ),
-                child: Icon(Icons.add, size: 24),
+                child: Icon(Icons.add, size: addsize),
               ),
-              onTap: () {
-                print("太棒了");
+              onTapDown: (TapDownDetails td) {
+                setState(() {
+                  fabwidth = 40;
+                  fabheight = 40;
+                  fabbottom = 36;
+                  fabright = 36;
+                  addsize = 24;
+                });
+              },
+              onTapUp: (TapUpDetails tu) {
+                setState(() {
+                  fabwidth = 48;
+                  fabheight = 48;
+                  fabbottom = 32;
+                  fabright = 32;
+                  addsize = 32;
+                });
               },
             ),
           )
-          // Container(
-          //   alignment: Alignment.topLeft,
-          //   margin: EdgeInsets.only(top: 24, left: 24),
-          //   child: Text(
-          //     '热门搜索',
-          //     style: TextStyle(
-          //       color: Color(0xff1E1F2D),
-          //       fontSize: 32,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //   ),
-          // ),
           // buildHotSearch(),
           // Row(
           //   mainAxisAlignment: MainAxisAlignment.spaceBetween,

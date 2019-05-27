@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
-      title: '网易云音乐',
+      title: '热搜集',
       home: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
