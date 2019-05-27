@@ -1,4 +1,5 @@
 //app主体
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,7 +20,7 @@ class HomePage extends StatelessWidget {
           //小球
           Positioned(
             bottom: 32,
-            right: 28,
+            right: ui.window.physicalSize.width/ui.window.devicePixelRatio/2-24,
             child: GestureDetector(
               child: Container(
                 width: 48,

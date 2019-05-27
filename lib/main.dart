@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
       title: '网易云音乐',
       home: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,//状态栏主题
-          statusBarColor: Colors.transparent,//状态栏背景颜色
+          statusBarIconBrightness: Brightness.dark,
+          statusBarColor: Colors.transparent,
         ),
         child: Scaffold(
-          backgroundColor: Colors.white,//背景颜色
+          backgroundColor: Color(0xFFE0E0F1),
           body: HomePage(),
         ),
       ),
