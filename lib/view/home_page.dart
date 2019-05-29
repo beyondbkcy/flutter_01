@@ -1,5 +1,4 @@
-//app主体
-import 'dart:ui' as ui;
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -7,18 +6,34 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  var width = ui.window.physicalSize.width;
-  var height = ui.window.physicalSize.height;
-  var top = ui.window.padding.top;
-  var devicePixelRatio = ui.window.devicePixelRatio;
-  double fabwidth = 48;
-  double fabheight = 48;
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  double _fabwidth = 72;
+  double _fabheight = 56;
+  double _fabbottom = 56;
+  double _fabright = 0;
+  double _addsize = 32;
 
-  double fabbottom = 32;
-  double fabright = 32;
+  //系统属性
+  Window window;
 
-  double addsize = 32;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    setState(() {
+      window = WidgetsBinding.instance.window;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     '热点集',
                     style: TextStyle(
-                      color: Color(0xff1E1F2D),
+                      color: Color(0xff242433),
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                     ),
@@ -44,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Container(
                   height: 56,
-                  width: width / devicePixelRatio,
+                  width: window.physicalSize.width / window.devicePixelRatio,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     physics: BouncingScrollPhysics(),
@@ -54,18 +69,17 @@ class _HomePageState extends State<HomePage> {
                       buildTopTab('网易云音乐', 0.2),
                       buildTopTab('今日头条', 0.2),
                       buildTopTab('QQ看点', 0.2),
-                      buildTopTab('微博', 0.2),
                     ],
                   ),
                 ),
                 Container(
-                  height: height / devicePixelRatio -
+                  height: window.physicalSize.height / window.devicePixelRatio -
                       56 -
                       16 -
                       32 -
                       32 -
-                      top / devicePixelRatio,
-                  width: width / devicePixelRatio,
+                      window.padding.top / window.devicePixelRatio,
+                  width: window.physicalSize.width / window.devicePixelRatio,
                   child: ListView(
                     physics: BouncingScrollPhysics(),
                     children: <Widget>[
@@ -83,49 +97,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           //小球操作按钮
-          Positioned(
-            bottom: fabbottom,
-            right: fabright,
-            child: GestureDetector(
-              child: Container(
-                width: fabwidth,
-                height: fabheight,
-                decoration: BoxDecoration(
-                  color: Color(0xff1E1F2D),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        offset: Offset(0, 24),
-                        blurRadius: 12,
-                        spreadRadius: -6)
-                  ],
-                ),
-                child: Icon(
-                  Icons.add,
-                  size: addsize,
-                  color: Colors.white,
-                ),
-              ),
-              onTapDown: (TapDownDetails td) {
-                setState(() {
-                  fabwidth = 40;
-                  fabheight = 40;
-                  fabbottom = 36;
-                  fabright = 36;
-                  addsize = 24;
-                });
-              },
-              onTapUp: (TapUpDetails tu) {
-                setState(() {
-                  fabwidth = 48;
-                  fabheight = 48;
-                  fabbottom = 32;
-                  fabright = 32;
-                  addsize = 32;
-                });
-              },
-            ),
-          )
+          buildPositioned()
           // buildHotSearch(),
           // Row(
           //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,7 +108,7 @@ class _HomePageState extends State<HomePage> {
           //       child: Text(
           //         '历史搜索',
           //         style: TextStyle(
-          //           color: Color(0xff1E1F2D),
+          //           color: Color(0xff242433),
           //           fontSize: 16,
           //           fontWeight: FontWeight.bold,
           //         ),
@@ -146,7 +118,7 @@ class _HomePageState extends State<HomePage> {
           //       margin: EdgeInsets.only(right: 24, top: 24),
           //       child: Icon(
           //         Icons.delete,
-          //         color: Color(0xff1E1F2D),
+          //         color: Color(0xff242433),
           //         size: 24,
           //       ),
           //     )
@@ -157,50 +129,96 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
 
-//列表项
-Container buildListItem() => Container(
+  //底部操作按钮
+  Positioned buildPositioned() {
+    return Positioned(
+      bottom: _fabbottom,
+      right: _fabright,
+      child: GestureDetector(
+        child: Container(
+          width: _fabwidth,
+          height: _fabheight,
+          decoration: BoxDecoration(
+            color: Color(0xff242433),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(56),
+              bottomLeft: Radius.circular(56),
+            ),
+          ),
+          child: Icon(
+            Icons.add,
+            size: _addsize,
+            color: Colors.white,
+          ),
+        ),
+        onTapDown: (TapDownDetails td) {
+          setState(() {
+            _fabwidth = 80;
+          });
+        },
+        onTapUp: (TapUpDetails tu) {
+          setState(() {
+            _fabwidth = 72;
+          });
+        },
+        onVerticalDragUpdate : (DragUpdateDetails dud){
+          setState(() {
+           _fabright=(window.physicalSize.width/window.devicePixelRatio-dud.globalPosition.dx-36)/5; 
+          });
+          print((window.physicalSize.width/window.devicePixelRatio-dud.globalPosition.dx).toString()+"======================");
+        },
+        
+      ),
+    );
+  }
+
+  //列表项
+  Container buildListItem() {
+    return Container(
       width: double.infinity,
       height: 112,
       margin: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Color(0x101E1F2D),
-        borderRadius: BorderRadius.circular(12),
-      ),
+          color: Color(0xff242433).withOpacity(0.05),
+          borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: EdgeInsets.only(left: 16,top: 16),
-              child: Text(
-          '标题',
+        padding: EdgeInsets.only(left: 16, top: 16),
+        child: Text(
+          "我操你妈,弄了老子好久",
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+              color: Color(0xff242433),
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
         ),
       ),
     );
+  }
+}
 
 //顶部选项卡
-GestureDetector buildTopTab(text, opacity) => GestureDetector(
-      onTap: () {},
-      child: Container(
-        margin: EdgeInsets.all(8),
-        padding: EdgeInsets.only(left: 32, right: 32),
-        decoration: BoxDecoration(
-          color: Color(0x101E1F2D),
-          borderRadius: BorderRadius.circular(56),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-                color: Color.fromRGBO(30, 31, 45, opacity),
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
-          ),
+GestureDetector buildTopTab(text, opacity) {
+  return GestureDetector(
+    onTap: () {},
+    child: Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.only(left: 32, right: 32),
+      decoration: BoxDecoration(
+        color: Color(0xff242433).withOpacity(0.05),
+        borderRadius: BorderRadius.circular(56),
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+              color: Color.fromRGBO(30, 31, 45, opacity),
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
         ),
       ),
-    );
+    ),
+  );
+}
 
 // 热门搜索
 Container buildHotSearch() => Container(
@@ -239,14 +257,14 @@ Container buildHistoricalSearch() => Container(
 // 热门搜索小部件
 Container buildContainer1(str) => Container(
       decoration: BoxDecoration(
-        color: Color(0x101E1F2D),
+        color: Color(0x10242433),
         borderRadius: BorderRadius.circular(100),
       ),
       padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
       child: Text(
         str,
         style: TextStyle(
-          color: Color(0xff1E1F2D),
+          color: Color(0xff242433),
         ),
       ),
     );
@@ -254,14 +272,14 @@ Container buildContainer1(str) => Container(
 //历史搜索小部件
 Container buildContainer2(str) => Container(
       decoration: BoxDecoration(
-        color: Color(0x101E1F2D),
+        color: Color(0x10242433),
         borderRadius: BorderRadius.circular(100),
       ),
       padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
       child: Text(
         str,
         style: TextStyle(
-          color: Color(0xff1E1F2D),
+          color: Color(0xff242433),
         ),
       ),
     );
