@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 
 class HomePage extends StatefulWidget {
   @override
@@ -81,15 +82,28 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       window.padding.top / window.devicePixelRatio,
                   width: window.physicalSize.width / window.devicePixelRatio,
                   child: ListView(
-                    physics: BouncingScrollPhysics(),
+                    // physics: BouncingScrollPhysics(),
                     children: <Widget>[
-                      buildListItem(),
-                      buildListItem(),
-                      buildListItem(),
-                      buildListItem(),
-                      buildListItem(),
-                      buildListItem(),
-                      buildListItem(),
+                      buildListItem('1'),
+                      buildListItem('2'),
+                      buildListItem('3'),
+                      buildListItem('4'),
+                      buildListItem('5'),
+                      buildListItem('6'),
+                      buildListItem('7'),
+                      buildListItem('8'),
+                      buildListItem('9'),
+                      buildListItem('10'),
+                      buildListItem('11'),
+                      buildListItem('12'),
+                      buildListItem('13'),
+                      buildListItem('14'),
+                      buildListItem('15'),
+                      buildListItem('16'),
+                      buildListItem('17'),
+                      buildListItem('18'),
+                      buildListItem('19'),
+                      buildListItem('20'),
                     ],
                   ),
                 )
@@ -162,37 +176,63 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             _fabwidth = 72;
           });
         },
-        onVerticalDragUpdate : (DragUpdateDetails dud){
+        onVerticalDragUpdate: (DragUpdateDetails dud) {
           setState(() {
-           _fabright=(window.physicalSize.width/window.devicePixelRatio-dud.globalPosition.dx-36)/5; 
+            _fabright = (window.physicalSize.width / window.devicePixelRatio -
+                    dud.globalPosition.dx -
+                    36) /
+                5;
           });
-          print((window.physicalSize.width/window.devicePixelRatio-dud.globalPosition.dx).toString()+"======================");
+          print((window.physicalSize.width / window.devicePixelRatio -
+                      dud.globalPosition.dx)
+                  .toString() +
+              "======================");
         },
-        
       ),
     );
   }
 
   //列表项
-  Container buildListItem() {
+  Container buildListItem(text) {
     return Container(
-      width: double.infinity,
-      height: 112,
-      margin: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-          color: Color(0xff242433).withOpacity(0.05),
-          borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: EdgeInsets.only(left: 16, top: 16),
-        child: Text(
-          "我操你妈,弄了老子好久",
-          style: TextStyle(
-              color: Color(0xff242433),
-              fontSize: 16,
-              fontWeight: FontWeight.bold),
+        margin: EdgeInsets.all(16),
+        padding: EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Color(0xff242433).withOpacity(0.1),
+          borderRadius: BorderRadius.circular(8),
         ),
-      ),
-    );
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: 16),
+                Text(
+                  '华为在美提起诉讼',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              '7922698',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black.withOpacity(0.2),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ));
   }
 }
 
