@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   List<Baidu> _baidutopdata = [];
 
   //系统属性
-  // Window window;
+  Window window;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     setState(() {
-      // window = WidgetsBinding.instance.window;
+      window = WidgetsBinding.instance.window;
     });
   }
 
@@ -189,49 +189,51 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ),
           ),
           SizedBox(width: 24),
-          Container(
-            width: (window.physicalSize.width / window.devicePixelRatio) - 96,
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Color(0xff242433).withOpacity(0.05),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+          Splash(
+            child: Container(
+              width: (window.physicalSize.width / window.devicePixelRatio) - 96,
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Color(0xff242433).withOpacity(0.05),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
-                ),
-                SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('搜索指数 : ' + index,
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black.withOpacity(0.25))),
-                    Row(
-                      children: <Widget>[
-                        Text('新',
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: tag1 == true
-                                    ? Colors.red.withOpacity(1)
-                                    : Colors.red.withOpacity(0))),
-                        SizedBox(width: 16),
-                        Text(tag2 == 1 ? '上升↑' : '下降↓',
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: tag2 == 1 ? Colors.red : Colors.blue))
-                      ],
-                    )
-                  ],
-                )
-              ],
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('搜索指数 : ' + index,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black.withOpacity(0.25))),
+                      Row(
+                        children: <Widget>[
+                          Text('新',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: tag1 == true
+                                      ? Colors.red.withOpacity(1)
+                                      : Colors.red.withOpacity(0))),
+                          SizedBox(width: 16),
+                          Text(tag2 == 1 ? '上升↑' : '下降↓',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: tag2 == 1 ? Colors.red : Colors.blue))
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ],
