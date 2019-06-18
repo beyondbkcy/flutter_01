@@ -8,9 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey
-      ),
+      theme: ThemeData(primarySwatch: Colors.blueGrey),
       debugShowCheckedModeBanner: true,
       title: '热搜集',
       home: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
           statusBarColor: Colors.transparent,
         ),
         child: Scaffold(
-          backgroundColor: Color(0xFFF2F3FF),
+          backgroundColor: Colors.white,
           body: HomePage(),
         ),
       ),
