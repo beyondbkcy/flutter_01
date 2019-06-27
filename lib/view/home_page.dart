@@ -4,6 +4,8 @@ import 'baidu_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:gbk2utf8/gbk2utf8.dart';
 import 'splash.dart';
+import 'test_page.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   List<Baidu> _baidutopdata = [];
 
   //系统属性
-  // Window window;
+  Window window;
 
   @override
   void initState() {
@@ -32,9 +34,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   void didChangeMetrics() {
-    // setState(() {
-    // window = WidgetsBinding.instance.window;
-    // });
+    setState(() {
+      window = WidgetsBinding.instance.window;
+    });
   }
 
   ///
@@ -42,6 +44,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   ///
   getBaiduTopData() async {
     setState(() => _baidutopdata.clear());
+
     List index = List();
     List title = List();
     List<bool> tag1 = List();
@@ -90,12 +93,34 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
 
     ///
-    ///依次添加到list中
-    setState(() {
-      for (var i = 0; i < index.length; i++) {
-        _baidutopdata.add(Baidu(index[i], title[i], tag1[i], tag2[i]));
-      }
+    ///依次添加到list中(延迟两秒)
+    ///
+    Future.delayed(Duration(milliseconds: 2000), () {
+      setState(() {
+        for (var i = 0; i < index.length; i++) {
+          _baidutopdata.add(Baidu(index[i], title[i], tag1[i], tag2[i]));
+        }
+      });
     });
+
+    ///
+    ///数据获取完成的提示
+    ///
+    // if (flag) {
+    //   Scaffold.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Row(
+    //         children: <Widget>[
+    //           Icon(Icons.sentiment_satisfied, size: 18),
+    //           SizedBox(width: 8),
+    //           Text('刷新成功！', style: TextStyle(fontSize: 18)),
+    //         ],
+    //       ),
+    //       backgroundColor: Color(0xff242433),
+    //       duration: Duration(milliseconds: 2000),
+    //     ),
+    //   );
+    // }
   }
 
   @override
@@ -147,7 +172,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       width: 56,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            colors: [Colors.white, Color(0x00ffffff)],
+                            colors: [Color(0xfffafafa), Color(0x00ffffff)],
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight),
                       ),
@@ -160,7 +185,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       width: 56,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            colors: [Colors.white, Color(0x00ffffff)],
+                            colors: [Color(0xfffafafa), Color(0x00ffffff)],
                             begin: Alignment.centerRight,
                             end: Alignment.centerLeft),
                       ),
@@ -185,7 +210,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                               height: 56,
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
-                                    colors: [Colors.white, Color(0x00ffffff)],
+                                    colors: [Color(0xfffafafa), Color(0x00ffffff)],
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter),
                               ),
@@ -198,7 +223,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                               height: 56,
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
-                                    colors: [Colors.white, Color(0x00ffffff)],
+                                    colors: [Color(0xfffafafa), Color(0x00ffffff)],
                                     begin: Alignment.bottomCenter,
                                     end: Alignment.topCenter),
                               ),
@@ -210,6 +235,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   : buiidListPlaceholderUI(),
             ],
           ),
+
           ///
           ///小球操作按钮
           ///
@@ -220,32 +246,23 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   ///
-  ///列表占位布局
+  ///刷新部件
   ///
   Widget buiidListPlaceholderUI() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
-      child: Row(
-        children: <Widget>[
-          ClipOval(
-            child: Container(
-              width: 32,
-              height: 32,
-              color: Colors.black.withOpacity(0.05),
+    return Expanded(
+      child: Container(
+        alignment: Alignment.center,
+        child: Container(
+          height: 56,
+          width: 56,
+          child: Opacity(
+            opacity: 0.5,
+            child: FlareActor(
+              'assets/earth.flr',
+              animation: 'ks',
             ),
           ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.only(left: 24),
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(4),
-              ),
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
@@ -304,9 +321,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       boxShadow: i == 0 || i == 1 || i == 2
                           ? [
                               BoxShadow(
-                                blurRadius: 2,
+                                blurRadius: 1,
                                 color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 2),
+                                offset: Offset(0, 1),
                               )
                             ]
                           : null,
@@ -362,6 +379,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       ],
                     ),
                   ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => new TestPage(
+                              title: baiduData[i].title,
+                            ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -402,7 +429,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ),
     );
   }
-  
+
   ///
   ///底部操作按钮
   ///
@@ -430,34 +457,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           ),
         ),
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => new TestPage()),
-          // );
           getBaiduTopData();
-
-          // Navigator.of(context).push(
-          //   new PageRouteBuilder(
-          //     opaque: false,
-          //     pageBuilder: (BuildContext context, _, __) {
-          //       return TestPage();
-          //     },
-          //     transitionsBuilder:
-          //         (_, Animation<double> animation, __, Widget child) {
-          //       return new FadeTransition(
-          //         opacity: animation,
-          //         child: new SlideTransition(
-          //             position: new Tween<Offset>(
-          //               begin: const Offset(0.0, 0.25),
-          //               end: Offset(0.0, 0.0),
-          //             ).animate(animation),
-          //             child: child),
-          //       );
-          //     },
-          //   ),
-          // );
         },
-        // getBaiduTopData();
       ),
     );
   }

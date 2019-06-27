@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           statusBarColor: Colors.transparent,
         ),
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xfffafafa),
           body: HomePage(),
         ),
       ),
