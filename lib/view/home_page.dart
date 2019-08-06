@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:gbk2utf8/gbk2utf8.dart';
 import 'splash.dart';
 import 'test_page.dart';
-import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     ///
     ///依次添加到list中(延迟两秒)
     ///
-    Future.delayed(Duration(milliseconds: 2000), () {
+    Future.delayed(Duration(milliseconds: 1000), () {
       setState(() {
         for (var i = 0; i < index.length; i++) {
           _baidutopdata.add(Baidu(index[i], title[i], tag1[i], tag2[i]));
@@ -125,122 +125,148 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Stack(
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light,
+        statusBarColor: Colors.transparent,
+      ),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
+        body: SafeArea(
+          child: Stack(
             children: <Widget>[
-              ///
-              ///标题栏
-              ///
-              Container(
-                margin: EdgeInsets.only(left: 28, top: 28, bottom: 14),
-                child: Text(
-                  '热点集',
-                  style: TextStyle(
-                    color: Color(0xff242433),
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-              ///
-              ///顶部选项条
-              ///
-              Stack(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  ///
+                  ///标题栏
+                  ///
                   Container(
-                    height: 40,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      physics: BouncingScrollPhysics(),
-                      children: <Widget>[
-                        buildTopTab('百度', 1.0),
-                        buildTopTab('抖音', 0.25),
-                        buildTopTab('网易云音乐', 0.25),
-                        buildTopTab('今日头条', 0.25),
-                        buildTopTab('QQ看点', 0.25),
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      height: 40,
-                      width: 56,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Color(0xfffafafa), Color(0x00ffffff)],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight),
+                    margin: EdgeInsets.only(left: 24, top: 16, bottom: 16),
+                    child: Text(
+                      'Hotspots',
+                      style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      height: 40,
-                      width: 56,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Color(0xfffafafa), Color(0x00ffffff)],
-                            begin: Alignment.centerRight,
-                            end: Alignment.centerLeft),
+
+                  ///
+                  ///顶部选项条
+                  ///
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        height: 28,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          physics: BouncingScrollPhysics(),
+                          children: <Widget>[
+                            buildTopTab('百度', 1.0),
+                            buildTopTab('抖音', 0.25),
+                            buildTopTab('微博', 0.25),
+                            buildTopTab('今日头条', 0.25),
+                            buildTopTab('QQ看点', 0.25),
+                          ],
+                        ),
                       ),
-                    ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          height: 40,
+                          width: 56,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).primaryColor.withOpacity(0)
+                                ],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          height: 40,
+                          width: 56,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).primaryColor.withOpacity(0)
+                                ],
+                                begin: Alignment.centerRight,
+                                end: Alignment.centerLeft),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+
+                  ///
+                  ///数据展示
+                  ///
+                  this._baidutopdata.length != 0
+                      ? Expanded(
+                          child: Stack(
+                            children: <Widget>[
+                              //列表数据载体
+                              buildListItem(_baidutopdata),
+                              //顶部虚化
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Container(
+                                  height: 56,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Theme.of(context).primaryColor,
+                                        Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0)
+                                      ],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //底部虚化
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  height: 56,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: [
+                                          Theme.of(context).primaryColor,
+                                          Theme.of(context)
+                                              .primaryColor
+                                              .withOpacity(0)
+                                        ],
+                                        begin: Alignment.bottomCenter,
+                                        end: Alignment.topCenter),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : buiidListPlaceholderUI(),
                 ],
               ),
 
               ///
-              ///数据展示
+              ///小球操作按钮
               ///
-              this._baidutopdata.length != 0
-                  ? Expanded(
-                      child: Stack(
-                        children: <Widget>[
-                          //列表数据载体
-                          buildListItem(_baidutopdata),
-                          //顶部虚化
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              height: 56,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: [Color(0xfffafafa), Color(0x00ffffff)],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter),
-                              ),
-                            ),
-                          ),
-                          //底部虚化
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: 56,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: [Color(0xfffafafa), Color(0x00ffffff)],
-                                    begin: Alignment.bottomCenter,
-                                    end: Alignment.topCenter),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : buiidListPlaceholderUI(),
+              buildFab(),
             ],
           ),
-
-          ///
-          ///小球操作按钮
-          ///
-          buildFab(),
-        ],
+        ),
       ),
     );
   }
@@ -253,13 +279,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       child: Container(
         alignment: Alignment.center,
         child: Container(
-          height: 56,
-          width: 56,
+          height: 40,
+          width: 40,
           child: Opacity(
-            opacity: 0.5,
-            child: FlareActor(
-              'assets/earth.flr',
-              animation: 'ks',
+            opacity: 0.75,
+            // child: FlareActor(
+            //   'assets/earth.flr',
+            //   animation: 'ks',
+            // ),
+            child: CircularProgressIndicator(
+              strokeWidth: 3,
             ),
           ),
         ),
@@ -285,25 +314,22 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 height: 32,
                 decoration: BoxDecoration(
                   color: i == 0
-                      ? Colors.redAccent.withOpacity(0.25)
+                      ? Colors.redAccent
                       : i == 1
-                          ? Colors.orangeAccent.withOpacity(0.25)
+                          ? Colors.orangeAccent
                           : i == 2
-                              ? Colors.blueAccent.withOpacity(0.25)
-                              : Colors.black.withOpacity(0.05),
+                              ? Colors.blueAccent
+                              : Theme.of(context).accentColor.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(32),
                 ),
                 child: Text(
                   (i + 1).toString(),
                   style: TextStyle(
                     fontSize: 16,
-                    color: i == 0
-                        ? Colors.redAccent
-                        : i == 1
-                            ? Colors.orangeAccent
-                            : i == 2
-                                ? Colors.blueAccent
-                                : Colors.black.withOpacity(0.5),
+                    fontStyle: FontStyle.italic,
+                    color: i == 0 || i == 1 || i == 2
+                        ? Colors.white
+                        : Theme.of(context).accentColor.withOpacity(0.5),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -314,9 +340,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     margin: EdgeInsets.only(left: 24),
                     padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: i == 0 || i == 1 || i == 2
-                          ? Colors.white
-                          : Color(0xff242433).withOpacity(0.05),
+                      color: Colors.white.withOpacity(0.025),
                       borderRadius: BorderRadius.circular(4),
                       boxShadow: i == 0 || i == 1 || i == 2
                           ? [
@@ -334,11 +358,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         Text(
                           baiduData[i].title,
                           style: TextStyle(
+                            color:
+                                Theme.of(context).accentColor.withOpacity(0.75),
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
+                            letterSpacing: 2,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -347,7 +374,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                 Text(
                                   baiduData[i].tag2 == 1 ? '上升↑' : '下降↓',
                                   style: TextStyle(
-                                      fontSize: 14,
+                                      fontStyle: FontStyle.italic,
                                       color: baiduData[i].tag2 == 1
                                           ? Colors.green
                                           : Colors.grey),
@@ -356,7 +383,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                 Text(
                                   '新',
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontStyle: FontStyle.italic,
                                     color: baiduData[i].tag1 == true
                                         ? Colors.red.withOpacity(1)
                                         : Colors.red.withOpacity(0.25),
@@ -368,9 +395,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                               ],
                             ),
                             Text(
-                              '热度 : ' + baiduData[i].index,
+                              '热度 : ' +
+                                  (int.parse(baiduData[i].index) / 10000)
+                                      .toStringAsFixed(2) +
+                                  'W',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.red,
                               ),
                             ),
@@ -380,14 +411,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => new TestPage(
-                              title: baiduData[i].title,
-                            ),
-                      ),
-                    );
+                    Future.delayed(Duration(milliseconds: 500), () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                new TestPage(title: baiduData[i].title)),
+                      );
+                    });
                   },
                 ),
               ),
@@ -402,28 +433,21 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   ///顶部选项卡
   ///
   Widget buildTopTab(text, opacity) {
-    return Opacity(
-      opacity: opacity,
-      child: GestureDetector(
-        onTap: () {},
-        child: Container(
-          alignment: Alignment.center,
-          margin: text == '百度'
-              ? EdgeInsets.only(left: 24, right: 12)
-              : text == 'QQ看点'
-                  ? EdgeInsets.only(left: 12, right: 24)
-                  : EdgeInsets.only(left: 12, right: 12),
-          padding: EdgeInsets.only(left: 32, right: 32),
-          decoration: BoxDecoration(
-            color: Color(0xff242433).withOpacity(0.1),
-            borderRadius: BorderRadius.circular(56),
-          ),
-          child: Text(
-            text,
-            style: TextStyle(
-                color: Color(0xff242433).withOpacity(0.5),
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        alignment: Alignment.center,
+        margin: text == '百度'
+            ? EdgeInsets.only(left: 28, right: 12)
+            : text == 'QQ看点'
+                ? EdgeInsets.only(left: 12, right: 28)
+                : EdgeInsets.only(left: 12, right: 12),
+        padding: EdgeInsets.only(left: 16, right: 16),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Theme.of(context).accentColor.withOpacity(opacity),
+            fontSize: 16,
           ),
         ),
       ),
@@ -442,18 +466,18 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).accentColor,
               borderRadius: BorderRadius.circular(56),
               boxShadow: [
                 BoxShadow(
-                  color: Color(0xff242433).withOpacity(0.25),
-                  blurRadius: 30,
-                  offset: Offset(0, 30),
+                  color: Colors.black.withOpacity(0.24),
+                  blurRadius: 24,
+                  offset: Offset(0, 24),
                 )
               ]),
           child: Icon(
             Icons.refresh,
-            color: Color(0xff242433),
+            color: Theme.of(context).primaryColor,
           ),
         ),
         onTap: () {
