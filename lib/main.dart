@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
         // primaryColor: Color(0xFFF8F8FA),
         // accentColor: Color(0xff242433),
         primaryColor: Color(0xff242433),
-        accentColor: Color(0xfffafafa),
+        accentColor: Color(0xfffafa90),
       ),
       debugShowCheckedModeBanner: true,
       title: '热搜集',
