@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
-  //百度热搜数据集
+  //百度热搜数据
   List<Baidu> _baidutopdata = [];
 
   //系统属性
